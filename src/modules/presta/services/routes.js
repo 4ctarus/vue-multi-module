@@ -4,7 +4,7 @@ import About from '../views/About.vue'
 export default [
     {
         path: '/',
-        component: () => import("../Presta.vue"),
+        component: () => import(/* webpackPrefetch: true */ /* webpackChunkName: "presta-chunck" */ "../Presta.vue"),
         children: [
             {
                 path: "",

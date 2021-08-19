@@ -4,7 +4,7 @@ import About from '../views/About.vue'
 export default [
     {
         path: '/',
-        component: () => import("../Client.vue"),
+        component: () => import(/* webpackPrefetch: true */ /* webpackChunkName: "user-chunck" */ "../Client.vue"),
         children: [
             {
                 path: "",
