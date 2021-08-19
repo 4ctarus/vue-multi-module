@@ -3,6 +3,8 @@
     <h1>Presta home</h1>
     <p>globalStateValue : {{ globalStateValue }}</p>
     <p>moduleStateValue : {{ moduleStateValue }}</p>
+
+    <button @click="update">update</button>
   </div>
 </template>
 
@@ -10,11 +12,16 @@
 export default {
   computed: {
     globalStateValue() {
-      console.log(this.$store);
-      return this.$store.getters.globalStateValue;
+      return this.$store.state.globalStateValue;
     },
     moduleStateValue() {
-      return this.$store.state.moduleStateValue;
+      return this.$store.state.presta.moduleStateValue;
+    },
+  },
+  methods: {
+    update() {
+      console.log(this.$store);
+      this.$store.commit("presta/update");
     },
   },
 };

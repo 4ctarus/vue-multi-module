@@ -8,7 +8,13 @@ import { store } from "./services";
 export default {
   name: "Presta",
   components: {},
-  store,
+  beforeMount() {
+    console.log(this.$store);
+    this.$store.registerModule("presta", store);
+  },
+  beforeDestroy() {
+    this.$store.unregisterModule("presta", store);
+  },
 };
 </script>
 

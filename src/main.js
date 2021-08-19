@@ -16,7 +16,7 @@ new Vue({
 }).$mount("#app");
 
 function addRoutes(prefix, routes) {
-  routes.forEach(route => {
+  routes.forEach((route) => {
     router.addRoute(!prefix ? route : {
       ...route,
       ...{
