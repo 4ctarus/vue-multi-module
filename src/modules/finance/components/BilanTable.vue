@@ -4,15 +4,26 @@
 
     <ul id="example-2">
       <li v-for="(row, index) in rows" :key="row">
-        {{ index }} - {{ $t(`${row}.label`) }}
-        <span v-if="$t(`${row}.type`) === 'device'">$</span>
+        {{ index }} - {{ $t(row.label) }}
+        <span v-if="row.type === 'device'">$</span>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-const rows = ["vente_marchandise", "cout_achat_marchandise_vendue"];
+const rows = [
+  {
+    label: "vente_marchandise",
+    type: "device",
+    editable: true,
+  },
+  {
+    label: "cout_achat_marchandise_vendue",
+    type: "percent",
+    editable: true,
+  },
+];
 
 export default {
   data() {
@@ -29,16 +40,8 @@ export default {
 <i18n>
 {
   "en": {
-    "vente_marchandise": {
-        "label": "Vente de marchandise",
-        "type": "device",
-        "editable": true
-    },
-    "cout_achat_marchandise_vendue": {
-        "label": "(Cout d'achat des marchandises vendues)",
-        "type": "device",
-        "editable": true
-    }
+    "vente_marchandise": "Vente de marchandise",
+    "cout_achat_marchandise_vendue": "(Cout d'achat des marchandises vendues)"
   }
 }
 </i18n>
