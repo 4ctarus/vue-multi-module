@@ -3,6 +3,7 @@ import { router, store } from "./services";
 import { routes as financeRoutes } from "./modules/finance/services";
 import { routes as prestaRoutes } from "./modules/presta/services";
 import App from "./App.vue";
+import i18n from './i18n'
 
 Vue.config.productionTip = false;
 
@@ -12,7 +13,8 @@ addRoutes('/presta', prestaRoutes);
 new Vue({
   router,
   store,
-  render: (h) => h(App),
+  i18n,
+  render: (h) => h(App)
 }).$mount("#app");
 
 function addRoutes(prefix, routes) {
