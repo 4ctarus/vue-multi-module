@@ -6,13 +6,13 @@
 import { store } from "./services";
 
 export default {
-  // name: "Presta",
+  // name: "AppFinance",
   components: {},
   beforeMount() {
-    this.$store.registerModule("presta", store);
+    this.$store.registerModule("finance", store);
   },
   beforeDestroy() {
-    this.$store.unregisterModule("presta", store);
+    this.$store.unregisterModule("finance", store);
   },
 };
 </script>

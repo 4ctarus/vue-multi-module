@@ -1,12 +1,12 @@
 import Vue from "vue";
 import { router, store } from "./services";
-import { routes as clientRoutes } from "./modules/client/services";
+import { routes as financeRoutes } from "./modules/finance/services";
 import { routes as prestaRoutes } from "./modules/presta/services";
 import App from "./App.vue";
 
 Vue.config.productionTip = false;
 
-addRoutes('/client', clientRoutes);
+addRoutes('/finance', financeRoutes);
 addRoutes('/presta', prestaRoutes);
 
 new Vue({
