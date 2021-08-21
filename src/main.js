@@ -4,6 +4,8 @@ import { routes as financeRoutes } from "./modules/finance/services";
 import { routes as prestaRoutes } from "./modules/presta/services";
 import App from "./App.vue";
 import i18n from './i18n'
+import './index.css'
+import './assets/tailwind.css'
 
 Vue.config.productionTip = false;
 
