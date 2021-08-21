@@ -1,13 +1,15 @@
 <template>
   <div class="bilan-table">
-    <ExpansionPanel v-bind:title="$t('title')" />
-
-    <ul id="example-2">
-      <li v-for="(row, index) in rows" :key="row.label">
-        {{ index }} - {{ $t(row.label) }}
-        <span v-if="row.type === 'device'">$</span>
-      </li>
-    </ul>
+    <ExpansionPanel :title="$t('title')">
+      <div class="p-4">
+        <ul id="example-2">
+          <li v-for="(row, index) in rows" :key="row.label">
+            {{ index }} - {{ $t(row.label) }}
+            <span v-if="row.type === 'device'">$</span>
+          </li>
+        </ul>
+      </div>
+    </ExpansionPanel>
   </div>
 </template>
 
@@ -28,6 +30,7 @@ const rows = [
 ];
 
 export default {
+  name: "BilanTable",
   components: {
     ExpansionPanel,
   },

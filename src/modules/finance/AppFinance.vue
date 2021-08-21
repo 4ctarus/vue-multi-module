@@ -6,7 +6,7 @@
 import { store } from "./services";
 
 export default {
-  // name: "AppFinance",
+  name: "AppFinance",
   components: {},
   beforeMount() {
     this.$store.registerModule("finance", store);
