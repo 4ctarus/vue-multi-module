@@ -3,7 +3,6 @@
 </template>
 
 <script>
-// nothing
 import { store } from "./services";
 
 export default {
