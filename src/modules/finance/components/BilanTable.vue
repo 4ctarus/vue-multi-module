@@ -1,9 +1,19 @@
 <template>
   <div class="bilan-table">
+    <!-- {{ bilan }} -->
     <c-form-control v-for="(row, index) in rows" :key="row.label">
       <c-form-label :for="index">{{ $t(row.label) }}</c-form-label>
-      {{ row }}
+      <!-- {{ row }} -->
       <c-input
+        v-if="row.total"
+        :id="index"
+        type="number"
+        :disabled="row.disabled"
+        v-model.number="row.total"
+      />
+
+      <c-input
+        v-else
         :id="index"
         type="number"
         :disabled="row.disabled"
@@ -15,22 +25,8 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import { CFormControl, CFormLabel, CInput } from "@chakra-ui/vue";
-
-const rows = [
-  {
-    label: "vente_marchandise",
-    type: "device",
-    disabled: false,
-    value: 12,
-  },
-  {
-    label: "cout_achat_marchandise_vendue",
-    type: "percent",
-    disabled: true,
-    value: null,
-  },
-];
 
 export default {
   name: "BilanTable",
@@ -39,29 +35,40 @@ export default {
     CFormLabel,
     CInput,
   },
-  beforeMount() {
+  created() {
     // init bilan store
     this.$store.commit(
       "finance/initBilan",
-      Object.fromEntries(rows.map((row) => [[row.label], row.value]))
+      Object.fromEntries(this.rows.map((row) => [[row.label], row.value]))
     );
   },
-  created() {
-    // try with watch,
-    // watch rows value to
-    this.unsubscribe = this.$store.subscribe((mutation, state) => {
-      if (mutation.type === "updateStatus") {
-        console.log(`Updating to ${state.bilan}`);
-      }
-    });
-  },
-  beforeDestroy() {
-    this.unsubscribe();
-  },
-  data() {
-    return {
-      rows,
-    };
+  computed: {
+    rows: {
+      get() {
+        return [
+          {
+            label: "vente_marchandise",
+            type: "device",
+            value: 12,
+          },
+          {
+            label: "cout_achat_marchandise_vendue",
+            type: "percent",
+            total: this.coutAchatMarchandise,
+            value: null,
+          },
+        ];
+      },
+    },
+
+    coutAchatMarchandise: {
+      get() {
+        return this.bilan.vente_marchandise * 100;
+      },
+    },
+    ...mapState({
+      bilan: (state) => state.finance.bilan,
+    }),
   },
   methods: {
     inputChange(key, value) {
