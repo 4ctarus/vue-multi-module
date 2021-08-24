@@ -1,19 +1,37 @@
 <template>
-  <div
-    class="expansion-panel rounded border border-gray-200 focus:border-white"
+  <c-box
+    class="expansion-panel"
     :class="{ opened }"
+    border-width="1px"
+    rounded="lg"
+    overflow="hidden"
   >
-    <div class="expansion-panel-header px-4 py-3 bg-white">
+    <c-box
+      class="expansion-panel-header"
+      display="grid"
+      gridGap="2"
+      gridTemplateColumns="1fr auto"
+      alignItems="center"
+      pl="4"
+      pr="2"
+      py="2"
+      font-weight="bold"
+    >
       <h3 class="text-lg">{{ title }}</h3>
 
-      <div class="expansion-panel-toggle">
+      <c-box
+        class="expansion-panel-toggle"
+        transition="300ms transform ease"
+        :transform="!opened ? '' : 'rotate3d(0, 0, 1, -180deg)'"
+      >
         <ButtonIcon
           :icon="require('@/assets/icons/chevron-down.svg')"
           alt="toggle panel"
           @click="toggle"
         />
-      </div>
-    </div>
+      </c-box>
+    </c-box>
+
     <transition
       name="expand"
       @enter="enter"
@@ -21,26 +39,22 @@
       @leave="leave"
     >
       <div class="expansion-panel-content" v-if="opened">
-        <slot></slot>
+        <c-box p="4">
+          <slot></slot>
+        </c-box>
       </div>
     </transition>
-
-    <!-- <div
-      class="expansion-panel-content"
-      ref="content"
-      :style="{ height: `${contentHeight}px` }"
-    >
-      <slot></slot>
-    </div> -->
-  </div>
+  </c-box>
 </template>
 
 <script>
+import { CBox } from "@chakra-ui/vue";
 import ButtonIcon from "./ButtonIcon.vue";
 
 export default {
   name: "ExpansionPanel",
   components: {
+    CBox,
     ButtonIcon,
   },
   props: {
@@ -105,26 +119,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.expansion-panel {
-  .expansion-panel-header {
-    display: grid;
-    grid-column-gap: 16px;
-    grid-template-columns: 1fr auto;
-    align-items: center;
-  }
-
-  .expansion-panel-toggle {
-    transition: 300ms transform ease;
-  }
-  &.opened .expansion-panel-toggle {
-    transform: rotate3d(0, 0, 1, -180deg);
-  }
-
-  .expansion-panel-content {
-    overflow: hidden;
-  }
-}
-
 .expand-enter-active,
 .expand-leave-active {
   transition: height 300ms ease-in-out, opacity 300ms ease-in-out;
