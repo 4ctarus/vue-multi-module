@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <c-box>
     <h3>Finance</h3>
     <nav>
       <li><router-link to="/finance">Home</router-link></li>
@@ -9,10 +9,18 @@
       <li><router-link to="/presta">Home</router-link></li>
       <li><router-link to="/presta/about">About</router-link></li>
     </nav>
+
     <router-view />
-  </div>
+  </c-box>
 </template>
 
+<script>
+import { CBox } from "@chakra-ui/vue";
 
-<style lang="scss">
-</style>
+export default {
+  name: "App",
+  components: {
+    CBox,
+  },
+};
+</script>

@@ -9,9 +9,12 @@
     "i18n:report": "vue-cli-service i18n:report --src \"./src/**/*.?(js|vue)\" --locales \"./src/locales/**/*.json\""
   },
   "dependencies": {
+    "@chakra-ui/vue": "^0.6.6",
+    "@emotion/css": "^11.1.3",
     "@tailwindcss/postcss7-compat": "^2.0.2",
     "autoprefixer": "^9",
     "core-js": "^3.6.5",
+    "emotion": "^10.0.27",
     "vue": "^2.6.11",
     "vue-i18n": "^8.25.0",
     "vue-router": "^3.2.0",
@@ -26,12 +29,14 @@
     "@vue/cli-service": "~4.5.0",
     "@vue/eslint-config-prettier": "^6.0.0",
     "babel-eslint": "^10.1.0",
+    "chakra-loader": "^1.0.2",
     "eslint": "^6.7.2",
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-vue": "^6.2.2",
     "prettier": "^2.2.1",
     "sass": "^1.26.5",
     "sass-loader": "^8.0.2",
+    "vue-cli-plugin-chakra-ui": "~1.0.3",
     "vue-cli-plugin-i18n": "~2.1.3",
     "vue-cli-plugin-tailwind": "~2.0.6",
     "vue-template-compiler": "^2.6.11"
