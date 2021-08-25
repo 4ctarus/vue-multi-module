@@ -1,46 +1,27 @@
 <template>
   <div class="bilan-table">
-    <!-- {{ bilan }} -->
-    <c-form-control v-for="(row, index) in rows" :key="row.label">
-      <c-form-label :for="index">{{ $t(row.label) }}</c-form-label>
-      <!-- {{ row }} -->
-      <c-input
-        v-if="row.total"
-        :id="index"
-        type="number"
-        :disabled="row.disabled"
-        v-model.number="row.total"
-      />
-
-      <c-input
-        v-else
-        :id="index"
-        type="number"
-        :disabled="row.disabled"
-        v-model.number="row.value"
-        @change="inputChange(row.label, row.value)"
-      />
-    </c-form-control>
+    <default-table
+      :rows="rows"
+      :initStoreMethodName="init"
+      :updateStoreMethodName="update"
+    ></default-table>
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
-import { CFormControl, CFormLabel, CInput } from "@chakra-ui/vue";
+import DefaultTable from "./DefaultTable.vue";
 
 export default {
-  name: "BilanTable",
+  name: "CompteTable",
   components: {
-    CFormControl,
-    CFormLabel,
-    CInput,
+    DefaultTable,
   },
-  created() {
-    // init bilan store
-    this.$store.commit(
-      "finance/initBilan",
-      Object.fromEntries(this.rows.map((row) => [[row.label], row.value]))
-    );
+  data() {
+    return {
+      init: "finance/initBilan",
+      update: "finance/updateBilan",
+    };
   },
   computed: {
     rows: {
@@ -70,22 +51,8 @@ export default {
       bilan: (state) => state.finance.bilan,
     }),
   },
-  methods: {
-    inputChange(key, value) {
-      this.$store.commit("finance/updateBilan", { key, value });
-    },
-  },
 };
 </script>
 
 <style>
 </style>
-
-<i18n>
-{
-  "en": {
-    "vente_marchandise": "Vente de marchandise",
-    "cout_achat_marchandise_vendue": "(Cout d'achat des marchandises vendues)"
-  }
-}
-</i18n>

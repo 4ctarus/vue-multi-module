@@ -1,59 +1,59 @@
 <template>
   <div class="compte-table">
-    <c-form-control v-for="(row, index) in rows" :key="row.label">
-      <c-form-label :for="index">{{ $t(row.label) }}</c-form-label>
-      {{ row }}
-      <c-input
-        :id="index"
-        v-model.number="row.value"
-        type="number"
-        :disabled="row.disabled"
-      />
-    </c-form-control>
+    <default-table
+      :rows="rows"
+      :initStoreMethodName="init"
+      :updateStoreMethodName="update"
+    ></default-table>
   </div>
 </template>
 
 <script>
-import { CFormControl, CFormLabel, CInput } from "@chakra-ui/vue";
-
-const rows = [
-  {
-    label: "vente_marchandise",
-    type: "device",
-    disabled: false,
-    value: null,
-  },
-  {
-    label: "cout_achat_marchandise_vendue",
-    type: "percent",
-    disabled: true,
-    value: null,
-  },
-];
+import { mapState } from "vuex";
+import DefaultTable from "./DefaultTable.vue";
 
 export default {
   name: "CompteTable",
   components: {
-    CFormControl,
-    CFormLabel,
-    CInput,
+    DefaultTable,
   },
   data() {
     return {
-      rows,
+      init: "finance/initCompte",
+      update: "finance/updateCompte",
     };
+  },
+  computed: {
+    rows: {
+      get() {
+        return [
+          {
+            label: "ca",
+            type: "device",
+            value: 12,
+          },
+          {
+            label: "charges_fixes",
+            type: "percent",
+            total: this.chargesFixes,
+            value: null,
+          },
+        ];
+      },
+    },
+
+    chargesFixes: {
+      get() {
+        return this.bilan.vente_marchandise * this.compte.ca;
+      },
+    },
+    ...mapState({
+      bilan: (state) => state.finance.bilan,
+      compte: (state) => state.finance.compte,
+    }),
   },
 };
 </script>
 
 <style>
 </style>
-
-<i18n>
-{
-  "en": {
-    "vente_marchandise": "Vente de marchandise",
-    "cout_achat_marchandise_vendue": "(Cout d'achat des marchandises vendues)"
-  }
-}
-</i18n>
