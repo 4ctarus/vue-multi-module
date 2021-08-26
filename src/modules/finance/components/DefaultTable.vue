@@ -1,38 +1,48 @@
 <template>
   <div class="table">
-    <!-- {{ bilan }} -->
-    <c-form-control v-for="(row, index) in rows" :key="row.label">
-      <c-form-label :for="index">{{ $t(row.label) }}</c-form-label>
-      <!-- {{ row }} -->
-      <c-input
-        v-if="row.total"
-        :id="index"
-        type="number"
-        placeholder="0"
-        v-model.number="row.total"
-        disabled
-      />
+    <c-grid
+      class="table-row"
+      template-columns="repeat(auto-fit, minmax(50px, 1fr))"
+      alignItems="center"
+      v-for="row in rows"
+      :key="row.label"
+    >
+      <c-box as="span"> {{ $t(row.label) }}</c-box>
 
-      <c-input
-        v-else
-        :id="index"
-        type="number"
-        placeholder="0"
-        v-model.number="row.value"
-        @input="inputChange(row.label, row.value)"
-      />
-    </c-form-control>
+      <div class="table-input-container">
+        <div class="table-input" v-if="row.total">{{ row.total }}</div>
+
+        <c-input
+          class="table-input"
+          v-else
+          type="number"
+          placeholder="0"
+          v-model.number="row.value"
+          @input="inputChange(row.label, row.value)"
+        />
+
+        <div class="table-input-suffix" v-if="row.type !== RowType.DAY">
+          {{ row.type === RowType.DEVICE ? "€" : "%" }}
+        </div>
+      </div>
+    </c-grid>
   </div>
 </template>
 
 <script>
-import { CFormControl, CFormLabel, CInput } from "@chakra-ui/vue";
+import { CBox, CGrid, CInput } from "@chakra-ui/vue";
+
+export const RowType = {
+  DEVICE: "device",
+  PERCENT: "percent",
+  DAY: "day",
+};
 
 export default {
   name: "DefaultTable",
   components: {
-    CFormControl,
-    CFormLabel,
+    CBox,
+    CGrid,
     CInput,
   },
   props: {
@@ -48,6 +58,11 @@ export default {
       type: String,
       required: true,
     },
+  },
+  data() {
+    return {
+      RowType,
+    };
   },
   created() {
     // init bilan store
@@ -69,5 +84,30 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
+.table-input-container {
+  position: relative;
+  height: 40px;
+
+  & > .table-input {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    text-align: right;
+    padding-right: 24px;
+  }
+
+  .table-input-suffix {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 24px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
 </style>
